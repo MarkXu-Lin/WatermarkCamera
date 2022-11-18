@@ -2,10 +2,8 @@ package com.mark.watermarkcamera
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.mark.watermarkcamera.activity.CameraActivity
+import com.mark.watermarkcamera.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+class MainActivity : CameraActivity<ActivityMainBinding>() {
 }
