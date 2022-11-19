@@ -15,8 +15,9 @@ import com.mark.watermarkcamera.R
 import java.lang.reflect.ParameterizedType
 
 
-open class BaseActivity<T: ViewBinding> : AppCompatActivity() {
+abstract class BaseActivity<T: ViewBinding> : AppCompatActivity() {
     protected lateinit var binding: T
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //利用反射，调用指定ViewBinding中的inflate方法填充视图
@@ -30,7 +31,11 @@ open class BaseActivity<T: ViewBinding> : AppCompatActivity() {
         }
         setContentView(binding.root)
         initSystemBarTint(false)
+        initView()
     }
+
+    abstract fun initView()
+
     open fun customViewBinDing(): T? = null
 
     protected fun initSystemBarTint(isSystemBarTranslucent: Boolean){

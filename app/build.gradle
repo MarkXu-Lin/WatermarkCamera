@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -34,7 +35,6 @@ android {
         viewBinding true
     }
 }
-
 dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
@@ -48,4 +48,7 @@ dependencies {
     implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
     // kotlin扩展（可选）
     implementation 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
+
+    implementation "com.github.permissions-dispatcher:permissionsdispatcher:4.9.2"
+    kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:4.9.2"
 }
