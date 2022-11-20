@@ -46,11 +46,7 @@ abstract class CameraActivity<T: ViewBinding> : BaseActivity<T>() {
     }
 
     override fun initView() {
-        getCameraInstance()
-        mPreview = mCamera?.let {
-            CameraPreview(this, it)
-        }
-        initPreview(mPreview)
+        initCameraWithPermissionCheck()
     }
 
     /** Create a File for saving an image or video */
@@ -85,9 +81,14 @@ abstract class CameraActivity<T: ViewBinding> : BaseActivity<T>() {
     abstract fun initPreview(preview: CameraPreview?)
 
     @NeedsPermission(android.Manifest.permission.CAMERA)
-    fun getCameraInstance(){
+    fun initCamera(){
         try {
             mCamera = Camera.open()
+            mCamera?.setDisplayOrientation(90)
+            mPreview = mCamera?.let {
+                CameraPreview(this, it)
+            }
+            initPreview(mPreview)
         }catch (e: Exception){
             Log.d(TAG, "" + e.message)
         }
