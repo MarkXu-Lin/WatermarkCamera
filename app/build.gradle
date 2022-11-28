@@ -44,11 +44,14 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    // 基础依赖包，必须要依赖
+    //////////////////////第三方库///////////////////////////
+    // ImmersionBar 基础依赖包，必须要依赖
     implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
-    // kotlin扩展（可选）
+    // ImmersionBar kotlin扩展（可选）
     implementation 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2'
-
+    // PermissionDispatcher
     implementation "com.github.permissions-dispatcher:permissionsdispatcher:4.9.2"
     kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:4.9.2"
+    // Lottie
+    implementation 'com.airbnb.android:lottie:5.2.0'
 }

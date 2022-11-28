@@ -9,6 +9,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ktx.immersionBar
 import com.mark.watermarkcamera.R
@@ -30,7 +31,11 @@ abstract class BaseActivity<T: ViewBinding> : AppCompatActivity() {
             customViewBinDing() ?: return
         }
         setContentView(binding.root)
-        initSystemBarTint(false)
+        if(isFullscreen()){
+            initSystemBarTint(true)
+        }else if (isImmersiveBar()){
+            initSystemBarTint(false)
+        }
         initView()
     }
 
@@ -38,11 +43,20 @@ abstract class BaseActivity<T: ViewBinding> : AppCompatActivity() {
 
     open fun customViewBinDing(): T? = null
 
-    protected fun initSystemBarTint(isSystemBarTranslucent: Boolean){
-        if (isSystemBarTranslucent){
-            // 状态栏全透明
+    protected open fun isFullscreen() = false
+
+    protected open fun isImmersiveBar() = false
+
+    private fun initSystemBarTint(fullscreen: Boolean){
+        if (fullscreen){
+            // 全屏-状态栏字体是白色的，需要用白色背景掩盖
+            immersionBar {
+                fullScreen(true)
+                hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
+            }
             return
         }
+        // 沉浸式
         immersionBar {
             statusBarColor(R.color.colorPrimary)
             navigationBarColor(R.color.colorPrimary)

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">水印相机-高度自定义</string>
     <string name="capture">Capture</string>
+    <string name="countDownTimeText">跳过 %d</string>
 </resources>
