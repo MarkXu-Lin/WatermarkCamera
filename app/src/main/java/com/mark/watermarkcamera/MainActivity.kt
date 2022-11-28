@@ -12,6 +12,7 @@ import com.mark.watermarkcamera.widget.camera.CameraPreview
 import kotlin.math.log
 
 class MainActivity : CameraActivity<ActivityMainBinding>() {
+    var isRecording = false
 
     override fun initPreview(preview: CameraPreview?) {
         if(preview != null){
@@ -28,6 +29,13 @@ class MainActivity : CameraActivity<ActivityMainBinding>() {
                 startActivity(intent)
             }catch (e: Exception){
                 Log.d("mark007", e.message + "")
+            }
+        }
+        binding.ivOperate.setOnClickListener {
+            if (isRecording){
+                stopRecord()
+                releaseMediaRecorder()
+                isRecording = false
             }
         }
     }

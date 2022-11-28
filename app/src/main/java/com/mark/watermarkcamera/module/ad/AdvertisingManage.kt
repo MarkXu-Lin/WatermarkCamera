@@ -1,10 +1,12 @@
 package com.mark.watermarkcamera.module.ad
 
 import android.os.CountDownTimer
+import androidx.lifecycle.*
+import kotlinx.coroutines.NonCancellable.start
 
-class AdvertisingManage {
+class AdvertisingManage(millisInFuture: Long = 4000) : DefaultLifecycleObserver {
     var advertisingManageListener: AdvertisingManageListener? = null
-    private val countDownTimer = object : CountDownTimer(4000, 1000){
+    private val countDownTimer = object : CountDownTimer(millisInFuture, 1000){
         override fun onTick(millisUntilFinished: Long) {
             advertisingManageListener?.timing((millisUntilFinished / 1000).toInt())
         }
@@ -14,17 +16,27 @@ class AdvertisingManage {
         }
     }
 
+    override fun onCreate(owner: LifecycleOwner) {
+        super.onCreate(owner)
+        start()
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
+        cancel()
+    }
+
     /**
      * 开始计时
      */
-    fun start(){
+    private fun start(){
         countDownTimer.start()
     }
 
     /**
      * 停止计时
      */
-    fun cancel(){
+    private fun cancel(){
         countDownTimer.cancel()
     }
 
@@ -42,4 +54,5 @@ class AdvertisingManage {
          */
         fun enterMainActivity()
     }
+
 }
