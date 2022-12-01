@@ -4,11 +4,12 @@ import android.os.CountDownTimer
 import androidx.lifecycle.*
 import kotlinx.coroutines.NonCancellable.start
 
-class AdvertisingManage(millisInFuture: Long = 4000) : DefaultLifecycleObserver {
+class AdvertisingManage(advertisingViewModel: AdvertisingViewModel) : DefaultLifecycleObserver {
     var advertisingManageListener: AdvertisingManageListener? = null
-    private val countDownTimer = object : CountDownTimer(millisInFuture, 1000){
+    private val countDownTimer = object : CountDownTimer(advertisingViewModel.millisInFuture, 1000){
         override fun onTick(millisUntilFinished: Long) {
-            advertisingManageListener?.timing((millisUntilFinished / 1000).toInt())
+//            advertisingManageListener?.timing((millisUntilFinished / 1000).toInt())
+            advertisingViewModel.setTimingResult(millisUntilFinished)
         }
 
         override fun onFinish() {

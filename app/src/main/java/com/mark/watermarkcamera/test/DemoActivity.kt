@@ -12,8 +12,6 @@ class DemoActivity: Activity(), LifecycleOwner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val advertisingManage = AdvertisingManage()
-        lifecycleRegistry.addObserver(advertisingManage)
     }
 
     override fun getLifecycle(): Lifecycle {
