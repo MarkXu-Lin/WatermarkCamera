@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace 'com.mark.watermarkcamera'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.mark.watermarkcamera"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -45,8 +45,8 @@ android {
     }
 }
 dependencies {
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
@@ -61,14 +61,14 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.fragment:fragment-ktx:1.4.1"
 
-    def room_version = "2.4.2"
+    def room_version = "2.4.3"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
 
-    implementation "com.google.dagger:hilt-android:2.39"
-    kapt "com.google.dagger:hilt-android-compiler:2.39"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     //////////////////////第三方库///////////////////////////
     // ImmersionBar 基础依赖包，必须要依赖

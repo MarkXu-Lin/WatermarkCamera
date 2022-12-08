@@ -6,7 +6,7 @@ import androidx.databinding.ObservableField
 import com.mark.watermarkcamera.BR
 import javax.inject.Inject
 
-class User constructor () {
+class User @Inject constructor () {
     var id: Long = 0
     var username = ObservableField<String>()
 

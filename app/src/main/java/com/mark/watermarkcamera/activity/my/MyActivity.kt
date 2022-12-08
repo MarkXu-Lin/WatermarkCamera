@@ -19,13 +19,15 @@ import javax.inject.Inject
 class MyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyBinding
 
+    @Inject
     lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my)
 //        val user = User(1, "xlk")
-//        binding.dataUser = user
+        user.username.set("哈哈哈")
+        binding.dataUser = user
 //        binding.btnUsername.setOnClickListener {
 //            user.username.set(binding.etUsername.text.toString())
 //        }
