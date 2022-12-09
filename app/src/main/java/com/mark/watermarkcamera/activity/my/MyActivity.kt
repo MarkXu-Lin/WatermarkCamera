@@ -13,6 +13,8 @@ import com.mark.watermarkcamera.databinding.ActivityMyBinding
 import com.mark.watermarkcamera.domain.Account
 import com.mark.watermarkcamera.tools.dp
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.*
+import java.io.IOException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -21,13 +23,28 @@ class MyActivity : AppCompatActivity() {
 
     @Inject
     lateinit var user: User
+    @Inject
+    lateinit var okHttpClient: OkHttpClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my)
 //        val user = User(1, "xlk")
-        user.username.set("哈哈哈")
         binding.dataUser = user
+        user.username.set("哈哈哈")
+        val request = Request.Builder()
+            .url("https://www.wanandroid.com/article/list/0/json")
+            .build()
+        okHttpClient.newCall(request).enqueue(object : Callback{
+            override fun onFailure(call: Call, e: IOException) {
+
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                user.username.set(response.body?.string())
+            }
+
+        })
 //        binding.btnUsername.setOnClickListener {
 //            user.username.set(binding.etUsername.text.toString())
 //        }
