@@ -6,14 +6,25 @@ import android.util.Log
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import com.google.gson.Gson
 import com.mark.watermarkcamera.R
+import com.mark.watermarkcamera.api.ApiService
+import com.mark.watermarkcamera.api.wanandroid.ApiWanAndroid
 import com.mark.watermarkcamera.bean.User
 import com.mark.watermarkcamera.database.UserDataBase
 import com.mark.watermarkcamera.databinding.ActivityMyBinding
 import com.mark.watermarkcamera.domain.Account
 import com.mark.watermarkcamera.tools.dp
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import okhttp3.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import javax.inject.Inject
 
@@ -23,6 +34,7 @@ class MyActivity : AppCompatActivity() {
 
     @Inject
     lateinit var user: User
+
     @Inject
     lateinit var okHttpClient: OkHttpClient
 
@@ -32,23 +44,53 @@ class MyActivity : AppCompatActivity() {
 //        val user = User(1, "xlk")
         binding.dataUser = user
         user.username.set("哈哈哈")
-        val request = Request.Builder()
-            .url("https://www.wanandroid.com/article/list/0/json")
-            .build()
-        okHttpClient.newCall(request).enqueue(object : Callback{
-            override fun onFailure(call: Call, e: IOException) {
+        val job = Job()
+        CoroutineScope(job).launch {
+//            val result = async {
+//                val request = Request.Builder()
+//                    .url("https://www.wanandroid.com/article/list/0/json")
+//                    .build()
+//                return@async okHttpClient.newCall(request).execute()
+//            }.await()
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://www.wanandroid.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val apiService = retrofit.create(ApiWanAndroid::class.java)
+            Log.d("xlk", Gson().toJson(apiService.loadDataByPage(1, 10)))
 
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                user.username.set(response.body?.string())
-            }
-
-        })
+        }
+//        lifecycleScope.launchWhenCreated {
+//            localData().collect{
+//                Log.d("xlk", it.toString())
+//            }
+//        }
+//        val request = Request.Builder()
+//            .url("https://www.wanandroid.com/article/list/0/json")
+//            .build()
+//        okHttpClient.newCall(request).enqueue(object : Callback{
+//            override fun onFailure(call: Call, e: IOException) {
+//
+//            }
+//
+//            override fun onResponse(call: Call, response: Response) {
+//                user.username.set(response.body?.string())
+//            }
+//
+//        })
 //        binding.btnUsername.setOnClickListener {
 //            user.username.set(binding.etUsername.text.toString())
 //        }
         generateAccount()
+    }
+
+    private fun localData() = flow {
+        for (i in 0..10){
+            delay(1000)
+            emit(i)
+        }
+    }.map {
+        it * 5
     }
 
     private fun generateAccount() {
